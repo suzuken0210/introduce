@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+ <head>
+  <meta charset="utf-8">
+   <title>janken</title>
+ </head>
+ <body>
+
+
+  <script>
+
+      //ジャンケンゲーム全体を関数化する
+      function janken () {
+
+      //ジャンケンの手の設定
+        const stone = 1;
+        const scissors = 2;
+        const paper = 3;
+
+      //ユーザの手を入力する関数の定義
+        function getHumanHand () {
+
+          //ユーザの手の入力
+          let human = prompt ('じゃんけんゲームを始めます。 あなたの手を半角数字の１～３で入力して下さい。' + stone + ':グー ' + scissors +':チョキ ' + paper + ':パー ')
+       
+          //入力された文字を数値（整数）に変換
+          human = parseInt (human);
+        
+          //入力を確認
+          if (human !== stone && human !== scissors && human !== paper) {
+            return undefined;
+          } else {
+            return human;
+          }
+        }
+
+
+
+
+
+      //ロボットの手を決定する関数の定義
+      function getRobotHand () {
+
+        //ロボットの手の決定
+        return Math.floor(Math.random()*3)+1;
+      }
+        //ロボットの手を名付ける関数の定義
+          function getHandName (robot) {
+
+        //ロボットの手の名付け
+
+          switch (robot) {
+            case stone:
+              return 'グー';
+            case scissors:
+              return 'チョキ';
+            case paper:
+              return 'パー';
+          }
+      }
+      
+      //勝敗を判定する関数の定義
+      function getResult (human, robot) {
+      
+        //勝敗の判定
+        if (human === robot) {
+          return 'あいこです。';
+        } else if ((human === stone && robot === scissors) || (human === scissors && robot === paper) || (human === paper&& robot === stone)) {
+          return 'あなたの勝ちです。';
+        } else {
+          return 'わたしの勝ちです。';
+        }
+      }
+
+      //結果を表示する関数の定義
+      function representResult (robot, human) {
+
+        //結果の表示
+        return getResult (robot, human) + 'ロボットの出した手は' + getHandName (robot) + 'でした。';
+      }
+      
+      
+      //メインプログラム
+      let human = getHumanHand();
+      if (!human) {
+        window.alert('入力がうまく認識されませんでした。ブラウザを再度読み込みこんでやり直して下さい。');
+      } else {
+        let robot = getRobotHand();
+        alert(representResult (robot, human));
+        return getResult (robot, human);
+      }
+      }
+      let win = 0;
+      let lose = false;
+      
+      while (!lose) {
+        let result = janken();
+        if (result === 'あいこです。') {
+          continue;
+        }
+          if (result === 'あなたの勝ちです。') {
+          win++;
+          window.alert('ただいま' + win + '勝です。');
+          continue;
+        }
+        alert('連勝はストップです。記録は' + win + '勝でした。');
+        lose = true;
+      }
+
+  </script>
+  
+
+
+ </body>
+</html>
